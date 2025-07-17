@@ -5,12 +5,26 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.colorino.ui.theme.ColorinoTheme
 
 class MainActivity : ComponentActivity() {
@@ -30,14 +44,44 @@ class MainActivity : ComponentActivity() {
 fun Logo(modifier: Modifier = Modifier){
     val logoicon = R.drawable.colorino_desenho
     val logoBrand = R.drawable.colorino
-    Row(modifier, verticalAlignment = Alignment.Top) {
-        Image(painter= painterResource(logoicon),  contentDescription = "Colorino drawing")
-        Image(painter= painterResource(logoBrand),  contentDescription = "Colorino drawing")
+    Row(modifier = modifier.fillMaxWidth().padding(start = 45.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Start) {
+        Image(modifier = Modifier.size(60.dp), contentScale = ContentScale.Fit, painter = painterResource(logoicon),  contentDescription = "Colorino drawing")
+        Image(modifier = Modifier.size(100.dp),contentScale = ContentScale.FillWidth, painter = painterResource(logoBrand),  contentDescription = "Colorino drawing")
     }
 }
-
+@Composable
+fun Navigation(modifier: Modifier = Modifier){
+    FlowRow(verticalArrangement = Arrangement.spacedBy(10.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        val buttonModifier = Modifier.width(130.dp)
+            .aspectRatio(1f/1f)
+        val buttonShape = RoundedCornerShape(0.dp)
+        Button(onClick = {}, modifier = buttonModifier, shape = buttonShape,  ) {
+            Text("Canetinhas")
+        }
+        Button(onClick = {}, modifier = buttonModifier, shape = buttonShape) {
+            Text("Historico")
+        }
+        Button(onClick = {}, modifier = buttonModifier, shape = buttonShape) {
+            Text("Jogar")
+        }
+    }
+}
+@Composable
+fun Main(modifier: Modifier = Modifier){
+    Column(
+        modifier = Modifier.fillMaxSize(), // Ocupa a tela inteira
+        horizontalAlignment = Alignment.CenterHorizontally, // Centraliza o Row (e outros itens) horizontalmente na tela
+        verticalArrangement = Arrangement.Top // Alinha o Row (e outros itens) no topo da tela
+    ) {
+        Logo()
+        Navigation()
+    }
+}
 @Preview(showBackground = true)
 @Composable
-fun LogoPreview() {
-
+fun AppPreview() {
+    Main()
 }
