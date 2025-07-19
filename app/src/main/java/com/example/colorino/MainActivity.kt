@@ -5,6 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
@@ -17,10 +19,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,7 +38,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ColorinoTheme{
-
+                Main()
             }
         }
     }
@@ -52,36 +57,59 @@ fun Logo(modifier: Modifier = Modifier){
     }
 }
 @Composable
-fun Navigation(modifier: Modifier = Modifier){
+fun Navigation(){
     FlowRow(verticalArrangement = Arrangement.spacedBy(10.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-        val buttonModifier = Modifier.width(130.dp)
-            .aspectRatio(1f/1f)
-        val buttonShape = RoundedCornerShape(0.dp)
-        Button(onClick = {}, modifier = buttonModifier, shape = buttonShape,  ) {
-            Text("Canetinhas")
-        }
-        Button(onClick = {}, modifier = buttonModifier, shape = buttonShape) {
-            Text("Historico")
-        }
-        Button(onClick = {}, modifier = buttonModifier, shape = buttonShape) {
-            Text("Jogar")
-        }
+        ButtonNav(
+            texto = "Canetinhas",
+            contentColor = MaterialTheme.colorScheme.primary)
+        ButtonNav(
+            texto = "Jogar",
+            contentColor = MaterialTheme.colorScheme.secondary)
+    }
+}
+@Composable
+fun ButtonNav(texto: String,
+              contentColor: Color){
+    val buttonModifier = Modifier.width(130.dp)
+        .aspectRatio(1f/1f)
+        .border(3.dp, contentColor, RoundedCornerShape(15.dp) )
+    val buttonColors = ButtonDefaults.buttonColors(
+        containerColor = Color.Transparent,
+        contentColor = contentColor,
+        disabledContainerColor =  MaterialTheme.colorScheme.surface,
+        disabledContentColor = MaterialTheme.colorScheme.onSurface)
+    Button(onClick = {},
+        colors = buttonColors,
+        modifier = buttonModifier) {
+        Text(texto)
     }
 }
 @Composable
 fun Main(modifier: Modifier = Modifier){
     Column(
-        modifier = Modifier.fillMaxSize(), // Ocupa a tela inteira
-        horizontalAlignment = Alignment.CenterHorizontally, // Centraliza o Row (e outros itens) horizontalmente na tela
-        verticalArrangement = Arrangement.Top // Alinha o Row (e outros itens) no topo da tela
+        modifier = Modifier.fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Top
     ) {
         Logo()
         Navigation()
     }
 }
-@Preview(showBackground = true)
+
+@Preview(showBackground = true, name = "Preview Tema Claro")
 @Composable
-fun AppPreview() {
-    Main()
+fun AppPreviewLight() {
+    ColorinoTheme(darkTheme = false) {
+        Main()
+    }
+}
+
+@Preview(showBackground = true, name = "Preview Tema Escuro")
+@Composable
+fun AppPreviewDark() {
+    ColorinoTheme(darkTheme = true) {
+        Main()
+    }
 }

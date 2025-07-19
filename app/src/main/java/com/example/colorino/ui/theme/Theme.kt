@@ -3,22 +3,14 @@ package com.example.colorino.ui.theme
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
-
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-
-
-
-@Immutable
-data class ExtendedColorScheme(
-    val quarternary: ColorFamily,
-)
 
 private val lightScheme = lightColorScheme(
     primary = primaryLight,
@@ -248,60 +240,6 @@ private val highContrastDarkColorScheme = darkColorScheme(
     surfaceContainerHighest = surfaceContainerHighestDarkHighContrast,
 )
 
-val extendedLight = ExtendedColorScheme(
-  quarternary = ColorFamily(
-  quarternaryLight,
-  onQuarternaryLight,
-  quarternaryContainerLight,
-  onQuarternaryContainerLight,
-  ),
-)
-
-val extendedDark = ExtendedColorScheme(
-  quarternary = ColorFamily(
-  quarternaryDark,
-  onQuarternaryDark,
-  quarternaryContainerDark,
-  onQuarternaryContainerDark,
-  ),
-)
-
-val extendedLightMediumContrast = ExtendedColorScheme(
-  quarternary = ColorFamily(
-  quarternaryLightMediumContrast,
-  onQuarternaryLightMediumContrast,
-  quarternaryContainerLightMediumContrast,
-  onQuarternaryContainerLightMediumContrast,
-  ),
-)
-
-val extendedLightHighContrast = ExtendedColorScheme(
-  quarternary = ColorFamily(
-  quarternaryLightHighContrast,
-  onQuarternaryLightHighContrast,
-  quarternaryContainerLightHighContrast,
-  onQuarternaryContainerLightHighContrast,
-  ),
-)
-
-val extendedDarkMediumContrast = ExtendedColorScheme(
-  quarternary = ColorFamily(
-  quarternaryDarkMediumContrast,
-  onQuarternaryDarkMediumContrast,
-  quarternaryContainerDarkMediumContrast,
-  onQuarternaryContainerDarkMediumContrast,
-  ),
-)
-
-val extendedDarkHighContrast = ExtendedColorScheme(
-  quarternary = ColorFamily(
-  quarternaryDarkHighContrast,
-  onQuarternaryDarkHighContrast,
-  quarternaryContainerDarkHighContrast,
-  onQuarternaryContainerDarkHighContrast,
-  ),
-)
-
 @Immutable
 data class ColorFamily(
     val color: Color,
@@ -318,23 +256,22 @@ val unspecified_scheme = ColorFamily(
 fun ColorinoTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable() () -> Unit
 ) {
-  val colorScheme = when {
-      dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-          val context = LocalContext.current
-          if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-      }
-      
-      darkTheme -> darkScheme
-      else -> lightScheme
-  }
+    val colorScheme = when {
+        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+            val context = LocalContext.current
+            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+        }
 
-  MaterialTheme(
-    colorScheme = colorScheme,
-    typography = Typography,
-    content = content
-  )
+        darkTheme -> darkScheme
+        else -> lightScheme
+    }
+    MaterialTheme(
+        colorScheme = colorScheme,
+        typography = Typography,
+        content = content
+    )
 }
 
