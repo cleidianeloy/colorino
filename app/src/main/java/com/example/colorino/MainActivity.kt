@@ -18,18 +18,24 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Create
+import androidx.compose.material.icons.rounded.Gamepad
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+
 import com.example.colorino.ui.theme.ColorinoTheme
 
 class MainActivity : ComponentActivity() {
@@ -60,17 +66,22 @@ fun Logo(modifier: Modifier = Modifier){
 fun Navigation(){
     FlowRow(verticalArrangement = Arrangement.spacedBy(10.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        val roundedIcons = Icons.Rounded;
         ButtonNav(
             texto = "Canetinhas",
-            contentColor = MaterialTheme.colorScheme.primary)
+            contentColor = MaterialTheme.colorScheme.primary,
+            icon = roundedIcons.Create)
         ButtonNav(
             texto = "Jogar",
-            contentColor = MaterialTheme.colorScheme.secondary)
+            contentColor = MaterialTheme.colorScheme.secondary,
+            icon = roundedIcons.Gamepad)
     }
 }
 @Composable
 fun ButtonNav(texto: String,
-              contentColor: Color){
+              contentColor: Color,
+              icon: ImageVector
+){
     val buttonModifier = Modifier.width(130.dp)
         .aspectRatio(1f/1f)
         .border(3.dp, contentColor, RoundedCornerShape(15.dp) )
@@ -82,7 +93,12 @@ fun ButtonNav(texto: String,
     Button(onClick = {},
         colors = buttonColors,
         modifier = buttonModifier) {
-        Text(texto)
+        Column(horizontalAlignment = Alignment.CenterHorizontally){
+            Icon(imageVector = icon,
+                contentDescription = texto,
+                modifier = Modifier.size(40.dp))
+            Text(texto)
+        }
     }
 }
 @Composable

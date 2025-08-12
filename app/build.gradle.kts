@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.ui.text.google.fonts)
     implementation(libs.androidx.material3.android)
+    implementation(libs.androidx.compose.material.icons.extended)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
