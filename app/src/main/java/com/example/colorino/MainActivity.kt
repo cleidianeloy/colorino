@@ -25,7 +25,6 @@ class MainActivity : ComponentActivity() {
 
 
 
-
 @Preview(showBackground = true, name = "Preview Light Theme")
 @Composable
 fun AppPreviewLight() {
