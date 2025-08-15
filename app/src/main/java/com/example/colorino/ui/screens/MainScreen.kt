@@ -17,7 +17,6 @@ import androidx.compose.material.icons.rounded.Gamepad
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -57,7 +56,7 @@ fun NavigationButtons(
     onNavigateToPlay: () -> Unit){
     FlowRow(verticalArrangement = Arrangement.spacedBy(10.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-        val roundedIcons = Icons.Rounded;
+        val roundedIcons = Icons.Rounded
         ButtonNav(
             texto = "Canetinhas",
             contentColor = colorScheme.primary,

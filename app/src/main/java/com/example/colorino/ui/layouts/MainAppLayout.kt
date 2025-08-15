@@ -17,7 +17,7 @@ import com.example.colorino.ui.components.Logo
 @Composable
 fun MainAppLayout(
     title: String = "", // Opcional: título para uma TopAppBar
-    content: @Composable (PaddingValues) -> Unit // Conteúdo da tela específica
+    content: @Composable (PaddingValues) -> Unit
 ) {
     Scaffold(
         topBar = {

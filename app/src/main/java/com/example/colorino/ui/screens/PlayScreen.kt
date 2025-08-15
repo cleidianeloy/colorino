@@ -2,13 +2,11 @@ package com.example.colorino.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
@@ -24,7 +22,7 @@ fun PlayScreen(navController: NavController,
         Column(modifier = Modifier.fillMaxSize()
             .background(colorScheme.background)
             .padding(paddingValues)){
-            val color = colorScheme.onBackground;
+            val color = colorScheme.onBackground
             Text("Vamos Jogar!", color = color)
             Text("Primeiro, tire uma foto das suas canetinhas", color = color)
         }

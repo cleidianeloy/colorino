@@ -2,7 +2,6 @@ package com.example.colorino.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme.colorScheme
@@ -27,7 +26,7 @@ fun MarkersScreen(
                 .background(colorScheme.background)
                 .padding(paddingValues)
         ) {
-            val color = colorScheme.onBackground;
+            val color = colorScheme.onBackground
             Text("Bem-vindo à Tela Canetinhas!", color = color)
         }
     }
