@@ -21,10 +21,7 @@ fun AppNavHost(navController: NavHostController) {
     NavHost(navController = navController,
             startDestination = AppDestinations.MAIN_SCREEN_ROUTE) {
             composable(AppDestinations.MAIN_SCREEN_ROUTE) {
-                MainScreen(
-                    onNavigateToMarkers = { navController.navigate(AppDestinations.MARKERS_ROUTE) },
-                    onNavigateToPlay = { navController.navigate(AppDestinations.PLAY_ROUTE) }
-                )
+                MainScreen(navController = navController)
             }
             composable(AppDestinations.MARKERS_ROUTE) {
                 MarkersScreen(navController = navController)

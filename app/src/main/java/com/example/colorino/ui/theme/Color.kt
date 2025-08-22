@@ -2,7 +2,7 @@ package com.example.colorino.ui.theme
 import androidx.compose.ui.graphics.Color
 
 
-val CustomPrimary = Color(0xFFFB4845)
+val CustomPrimary = Color(0xFFFF8900)
 val CustomSecondary = Color(0xFF00A1CC)
 val CustomTertiary = Color(0xFF32B230)
 

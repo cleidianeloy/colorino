@@ -19,7 +19,9 @@ fun MarkersScreen(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
-    MainAppLayout(title = "Markers Page") { paddingValues ->
+    MainAppLayout(
+        title = "Markers Page",
+        navController = navController) { paddingValues ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
