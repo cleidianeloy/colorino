@@ -1,5 +1,6 @@
 package com.example.colorino.ui.screens
 
+import android.Manifest
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,6 +26,9 @@ import com.example.colorino.navigation.AppDestinations
 import com.example.colorino.ui.components.ButtonNav
 import com.example.colorino.ui.layouts.MainAppLayout
 import com.example.colorino.ui.theme.ColorinoTheme
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
 
 @Composable
 fun PlayScreen(navController: NavController,
@@ -37,36 +41,67 @@ fun PlayScreen(navController: NavController,
             .padding(10.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally){
-            val color = colorScheme.tertiary
-            Text("Vamos Jogar!",
-                color = color,
-                fontSize = 40.sp,
-                textAlign = TextAlign.Center,
-                fontWeight = FontWeight.Bold )
-            Text("Agora é o momento de escolher as canetinhas que você vai usar",
-                color = color,
-                fontSize = 20.sp,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(top = 30.dp))
-            FlowRow(modifier = Modifier.padding(top = 30.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
-                horizontalArrangement = Arrangement.spacedBy(10.dp),) {
-                val roundedIcons = Icons.Rounded
-                ButtonNav(
-                    texto = "Canetinhas",
-                    contentColor = colorScheme.primary,
-                    icon = roundedIcons.Create,
-                    onClick = {navController.navigate(AppDestinations.MARKERS_ROUTE)})
-                ButtonNav(
-                    texto = "Nova",
-                    contentColor = colorScheme.secondary,
-                    icon = roundedIcons.Upload,
-                    onClick = {navController.navigate(AppDestinations.PLAY_ROUTE)})
-            }
+            Introduction()
+            ButtonsNav(navController)
         }
     }
 }
-
+@OptIn(ExperimentalPermissionsApi::class)
+@Composable
+fun Introduction(){
+    val cameraPermissionState = rememberPermissionState(
+        permission = Manifest.permission.CAMERA
+    )
+    val color = colorScheme.tertiary
+    Text("Vamos Jogar!",
+        color = color,
+        fontSize = 40.sp,
+        textAlign = TextAlign.Center,
+        fontWeight = FontWeight.Bold )
+    Text("Agora é o momento de escolher as canetinhas que você vai usar",
+        color = color,
+        fontSize = 20.sp,
+        textAlign = TextAlign.Center,
+        modifier = Modifier.padding(top = 30.dp))
+    if(!cameraPermissionState.status.isGranted){
+        Text("Para cadastrar uma nova canetinha, precisamos de sua permissão para registrar uma foto",
+            color = color,
+            fontSize = 16.sp,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(top = 30.dp))
+    }
+}
+@OptIn(ExperimentalPermissionsApi::class)
+@Composable
+fun ButtonsNav(navController: NavController){
+    val cameraPermissionState = rememberPermissionState(
+        permission = Manifest.permission.CAMERA
+    )
+    FlowRow(modifier = Modifier.padding(top = 30.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),) {
+        val roundedIcons = Icons.Rounded
+        ButtonNav(
+            texto = "Canetinhas",
+            contentColor = colorScheme.primary,
+            icon = roundedIcons.Create,
+            onClick = {navController.navigate(AppDestinations.MARKERS_ROUTE)})
+        ButtonNav(
+            texto = "Nova",
+            contentColor = colorScheme.secondary,
+            icon = roundedIcons.Upload,
+            onClick = {
+                if (cameraPermissionState.status.isGranted) {
+                    // SE a permissão já foi dada, navegue para a câmera.
+                    navController.navigate(AppDestinations.CAMERA_ROUTE)
+                } else {
+                    // SENÃO, peça a permissão.
+                    // O Android vai mostrar a caixa de diálogo para o usuário.
+                    cameraPermissionState.launchPermissionRequest()
+                }
+            })
+    }
+}
 @Preview(showBackground = true, name = "Preview Light Theme")
 @Composable
 fun PlayPreviewLight() {
