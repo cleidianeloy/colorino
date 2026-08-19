@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,7 +19,8 @@ import com.example.colorino.R
 fun Logo(modifier: Modifier = Modifier){
     val logoicon = R.drawable.colorino_desenho
     val logoBrand = R.drawable.colorino
-    Row(modifier = modifier.fillMaxWidth().padding(start = 45.dp),
+    Row(modifier = modifier.fillMaxWidth().padding(start = 45.dp)
+        .statusBarsPadding() ,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start) {
         Image(modifier = Modifier.size(60.dp), contentScale = ContentScale.Fit, painter = painterResource(logoicon),  contentDescription = "Colorino drawing")

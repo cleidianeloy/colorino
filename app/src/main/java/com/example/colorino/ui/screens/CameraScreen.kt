@@ -8,11 +8,16 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.sharp.Close
 import androidx.compose.material.icons.sharp.Lens
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -93,7 +98,12 @@ fun CameraScreen(
             },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(16.dp)
+                .navigationBarsPadding()
+                .padding(32.dp)
+                .background(
+                    color = MaterialTheme.colorScheme.onPrimary,
+            shape = CircleShape // Pinta o fundo de circular
+        )
         ) {
             Icon(
                 imageVector = Icons.Sharp.Lens,
@@ -101,6 +111,14 @@ fun CameraScreen(
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(64.dp)
             )
+        }
+        IconButton(onClick = { navController.popBackStack() },
+            modifier = Modifier.align(Alignment.TopEnd).statusBarsPadding() ) {
+            Icon(
+                imageVector = Icons.Sharp.Close,
+                contentDescription = "Voltar",
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(64.dp))
         }
     }
 

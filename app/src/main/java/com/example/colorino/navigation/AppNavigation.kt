@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.colorino.ui.screens.CameraHandle
 import com.example.colorino.ui.screens.MainScreen
 import com.example.colorino.ui.screens.MarkersScreen
 import com.example.colorino.ui.screens.PlayScreen
@@ -15,7 +16,9 @@ object AppDestinations {
     const val MARKERS_ROUTE = "markers"
     const val PLAY_ROUTE = "play"
     const val CAMERA_ROUTE = "camera"
-    const val CAPTURED_IMAGE_URI_KEY = "captured_image_uri"
+    const val CAMERA_HANDLE_BASE = "camera_handle"
+    const val CAMERA_HANDLE_ROUTE = "$CAMERA_HANDLE_BASE/{imageUri}"
+    const val IMAGE_ARG = "imageUri"
 }
 
 @Composable
@@ -34,21 +37,21 @@ fun AppNavHost(navController: NavHostController) {
             composable(AppDestinations.CAMERA_ROUTE) {
                 CameraScreen(navController = navController,
                     onImageCaptured = { uri ->
-                        // 1. Pegue a "pilha de volta" da navegação.
-                        //    A entrada anterior (previousBackStackEntry) é a tela que te chamou (ex: PlayScreen).
-                        val previousScreenState = navController.previousBackStackEntry?.savedStateHandle
+                        val encodedUri = java.net.URLEncoder.encode(uri.toString(), "UTF-8")
 
-                        // 2. Salve o URI da imagem nesse estado.
-                        //    A tela anterior poderá ler este valor.
-                        //    Usamos AppDestinations.CAPTURED_IMAGE_URI_KEY como chave para evitar erros de digitação.
-                        previousScreenState?.set(AppDestinations.CAPTURED_IMAGE_URI_KEY, uri.toString())
-
-                        // 3. Volte para a tela anterior.
-                        //    A CameraScreen já faz isso internamente após a captura,
-                        //    mas se não fizesse, você chamaria aqui:
-                        // navController.popBackStack()
+                        navController.navigate("${AppDestinations.CAMERA_HANDLE_BASE}/$encodedUri") {
+                            popUpTo(AppDestinations.CAMERA_ROUTE) { inclusive = true }
+                        }
                     })
             }
+        composable(AppDestinations.CAMERA_HANDLE_ROUTE){ backStackEntry ->
+            val imageUri = backStackEntry.arguments?.getString(AppDestinations.IMAGE_ARG)
+
+            CameraHandle(
+                navController = navController,
+                imageUri = imageUri // Você precisará adicionar esse parâmetro no CameraHandle
+            )
+        }
             // Add more composable(route) { ... } for other screens
     }
 }
