@@ -40,7 +40,7 @@ fun AppNavHost(navController: NavHostController) {
                         val encodedUri = java.net.URLEncoder.encode(uri.toString(), "UTF-8")
 
                         navController.navigate("${AppDestinations.CAMERA_HANDLE_BASE}/$encodedUri") {
-                            popUpTo(AppDestinations.CAMERA_ROUTE) { inclusive = true }
+                            popUpTo(AppDestinations.CAMERA_HANDLE_ROUTE) { inclusive = true }
                         }
                     })
             }

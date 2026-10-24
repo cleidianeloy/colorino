@@ -86,8 +86,6 @@ fun CameraScreen(
                         onImageCaptured = { uri ->
                             Log.d(TAG, "Imagem capturada: $uri")
                             onImageCaptured(uri) // Retorna o URI
-                            /*TODO criar uma tela ou trabalhar nas que existem para que aceitem a nova foto*/
-                            navController.popBackStack() // Volta para a tela anterior
                         },
                         onError = { exception ->
                             Log.e(TAG, "Erro ao capturar imagem:", exception)
@@ -100,6 +98,7 @@ fun CameraScreen(
                 .align(Alignment.BottomCenter)
                 .navigationBarsPadding()
                 .padding(32.dp)
+                .navigationBarsPadding()
                 .background(
                     color = MaterialTheme.colorScheme.onPrimary,
             shape = CircleShape // Pinta o fundo de circular
